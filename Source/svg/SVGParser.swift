@@ -416,6 +416,11 @@ open class SVGParser {
         case "title", "desc", "mask", "clip", "filter",
              "linearGradient", "radialGradient", SVGKeys.fill:
             break
+            
+        case "symbol", "switch":
+                    try? parseSvg(node.children)
+                    return .none
+            
         default:
             print("SVG parsing error. Shape \(element.name) not supported")
             return .none
