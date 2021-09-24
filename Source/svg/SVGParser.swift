@@ -720,11 +720,26 @@ open class SVGParser {
             Scanner(string: cleanedHexString).scanHexInt32(&rgbValue)
         }
 
-        let red = CGFloat((rgbValue >> 16) & 0xff)
-        let green = CGFloat((rgbValue >> 08) & 0xff)
-        let blue = CGFloat((rgbValue >> 00) & 0xff)
+//        let red = CGFloat((rgbValue >> 16) & 0xff)
+//        let green = CGFloat((rgbValue >> 08) & 0xff)
+//        let blue = CGFloat((rgbValue >> 00) & 0xff)
+        
+        if cleanedHexString.count > 6 {
+            
+            let red = CGFloat((rgbValue >> 24) & 0xff)
+            let green = CGFloat((rgbValue >> 16) & 0xff)
+            let blue = CGFloat((rgbValue >> 08) & 0xff)
+            let alpha = Double((rgbValue >> 00) & 0xff) / 255
+            return Color.rgba(r: Int(red), g: Int(green), b: Int(blue), a: alpha)
+        } else {
+            
+            let red = CGFloat((rgbValue >> 16) & 0xff)
+            let green = CGFloat((rgbValue >> 08) & 0xff)
+            let blue = CGFloat((rgbValue >> 00) & 0xff)
+            return Color.rgba(r: Int(red), g: Int(green), b: Int(blue), a: opacity)
+        }
 
-        return Color.rgba(r: Int(red), g: Int(green), b: Int(blue), a: opacity)
+//        return Color.rgba(r: Int(red), g: Int(green), b: Int(blue), a: opacity)
     }
 
     fileprivate func createColor(_ colorString: String, opacity: Double = 1) -> Color? {
