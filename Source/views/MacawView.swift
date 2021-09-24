@@ -43,6 +43,8 @@ open class MacawView: MView, MGestureRecognizerDelegate {
     override open var frame: CGRect {
         didSet {
             super.frame = frame
+            // 这里想不通，在部分手机上会出现旋转后drawingview的frame的问题，但是部分不会，暂时先这么处理吧
+            if drawingView.frame != CGRect.zero { return }
             drawingView.frame = frame
         }
     }
